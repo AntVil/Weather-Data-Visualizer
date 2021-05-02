@@ -4,12 +4,13 @@ A tool for visualizing weatherdata
 ### TODO:
 - [ ] collect dwd-data
   - [x] download data
-  - [ ] format data
+  - [x] format data
   - [x] save data
-  - [ ] fix bugs
+  - [x] fix bugs (Anton)
 - [ ] plot data
 - [ ] interface
-  - [ ] design/features
+  - [ ] design/features (Alexander)
+- [ ] photos -> video (Jan)
 
 ### Ideas:
 - dropdown for location selection
