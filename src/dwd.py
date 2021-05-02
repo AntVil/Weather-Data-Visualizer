@@ -91,8 +91,8 @@ def download_dwd(*urls):
             meta_df.START = pd.to_datetime(meta_df.START, format="%Y%m%d", utc=True)
             meta_df.END = pd.to_datetime(meta_df.END, format="%Y%m%d", utc=True)
 
-            start = station_df.TIME.min()
-            end = station_df.TIME.max() + datetime.timedelta(hours=1)
+            start = station_df.TIME.min().to_pydatetime()
+            end = station_df.TIME.max().to_pydatetime() + datetime.timedelta(hours=1)
 
             print(start, end)
 
@@ -100,8 +100,11 @@ def download_dwd(*urls):
             lon = np.array([])
             asl = np.array([])
             for i, entry in meta_df.iterrows():
+                entry.START = entry.START.to_pydatetime()
                 if i < len(meta_df) - 1:
-                    entry.END = meta_df.iloc[i+1].START - datetime.timedelta(days=1)
+                    entry.END = meta_df.iloc[i+1].START.to_pydatetime() - datetime.timedelta(days=1)
+                else:
+                    entry.END = entry.END.to_pydatetime()
                 a = max((entry.END - start).total_seconds() // 3600 + 24, 0)
                 b = max((entry.START - start).total_seconds() // 3600, 0)
                 c = max((entry.END - end).total_seconds() // 3600 + 24, 0)
