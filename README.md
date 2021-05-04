@@ -2,7 +2,7 @@
 A tool for visualizing weatherdata
 
 ### How to?
-This project uses `python3.8`. You should create a virutal enviornment. In the commandline navigate to the root of this project and create one.
+This project uses `python3.8`. You should create a virutal environment. In the commandline navigate to the root of this project and create one.
 ```shell 
 py -m virtualenv venv
 ```
@@ -15,7 +15,7 @@ virtualenv venv --python=python3.8
 
 After creating one activate it
 ```shell 
-source venv/Scripts/activate
+venv/Scripts/activate
 ```
 *(windows)*
 
