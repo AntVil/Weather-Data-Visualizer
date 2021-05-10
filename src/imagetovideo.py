@@ -1,22 +1,24 @@
+# this file contains all components needed to merge images to a video
 import cv2
-import numpy as np
-import glob
+import os
 
-def image_to_video():
 
-    img_array = []
-    #Import images and get relevant informations for building the video and saveing it into an array
-    for filename in glob.glob('./Images/*.jpg'):
-        img = cv2.imread(filename)
-        height, width, layers = img.shape
-        size = (width,height)
-        img_array.append(img)
-    #Create Video Writer
-    out = cv2.VideoWriter('Video.avi',cv2.VideoWriter_fourcc(*'DIVX'), 1, size)
+def image_to_video(*image_paths):
+    """
+    merges all given images to a video
+    """
 
-    #Build and write video
-    for i in range(len(img_array)):
-        out.write(img_array[i])
+    size = cv2.imread(image_paths[0]).shape[1::-1]
+
+    out = cv2.VideoWriter("video.avi", cv2.VideoWriter_fourcc(*"DIVX"), 1, size)
+
+    for image_path in image_paths:
+        out.write(cv2.imread(image_path))
+    
     out.release()
 
-image_to_video()
+
+if __name__ == "__main__":
+    image_to_video(
+        os.path.join(os.path.dirname(__file__), "data", "images", "image.jpg")
+    )
