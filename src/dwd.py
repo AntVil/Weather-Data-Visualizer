@@ -134,5 +134,13 @@ def download_dwd(*urls):
         station_df.to_parquet(os.path.join(DWD_FOLDER, file_name))
 
 
+def get_dwd_DataFrames():
+    for file_path in os.listdir(DWD_FOLDER):
+        yield pd.read_parquet(os.path.join(DWD_FOLDER, file_path))
+
+
 if __name__ == "__main__":
-    download_dwd()
+    #download_dwd()
+    for df in get_dwd_DataFrames():
+        print(df)
+        exit()
