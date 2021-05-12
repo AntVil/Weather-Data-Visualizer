@@ -19,7 +19,7 @@ The results are [pandas DataFrames](https://pandas.pydata.org/docs/reference/api
 The date information is converted to `utc` [datetimes](https://docs.python.org/3/library/datetime.html) and all other values are converted either to int or float to reduce file size.
 
 ### Plotting
-To create plots of maps [matplotlib](https://matplotlib.org/) and [Cartopy](https://scitools.org.uk/cartopy/docs/latest/matplotlib/intro.html) work together
+To create plots of maps [matplotlib](https://matplotlib.org/) and [Cartopy](https://scitools.org.uk/cartopy/docs/latest/matplotlib/intro.html) work together:
 ![](./images/cartopy_map.png)
 The map can be cropped to only display germany:
 ![](./images/cartopy_germany.png)
@@ -27,7 +27,10 @@ The map can be cropped to only display germany:
 [plot.py](../src/plot.py)
 
 ### Converting to video
-[imagetovideo.py](../src/imagetovideo.py)
+Using [cv2](https://pypi.org/project/opencv-python/) images like these:
+![](./images/test_images.png)
+can be converted to a `mp4` video like this (converted to `gif` for easy display):
+![](./images/test_video_as_gif.gif)
 
 ### The Interface
 [excalidraw](https://excalidraw.com/)
