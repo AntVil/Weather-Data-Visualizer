@@ -11,6 +11,6 @@ ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
 ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
 ax.add_feature(cartopy.feature.RIVERS)
 
-ax.set_extent([-20, 60, -40, 40])
+ax.set_extent([5, 16, 57, 45])
 
 plt.show()
