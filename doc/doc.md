@@ -19,9 +19,12 @@ The results are [pandas DataFrames](https://pandas.pydata.org/docs/reference/api
 The date information is converted to `utc` [datetimes](https://docs.python.org/3/library/datetime.html) and all other values are converted either to int or float to reduce file size.
 
 ### Plotting
+To create plots of maps [matplotlib](https://matplotlib.org/) and [Cartopy](https://scitools.org.uk/cartopy/docs/latest/matplotlib/intro.html) work together
+![](./images/cartopy_map.png)
+The map can be cropped to only display germany:
+![](./images/cartopy_germany.png)
+
 [plot.py](../src/plot.py)
-[Cartopy](https://scitools.org.uk/cartopy/docs/latest/matplotlib/intro.html)
-[matplotlib](https://matplotlib.org/)
 
 ### Converting to video
 [imagetovideo.py](../src/imagetovideo.py)
