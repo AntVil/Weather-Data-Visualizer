@@ -1,4 +1,4 @@
 .vscode/
 venv/
 lib/
-src/data/
+src/data/dwd
