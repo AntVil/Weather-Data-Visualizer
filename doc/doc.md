@@ -16,4 +16,16 @@ The measurements are spatially not always at the same place. Some timeranges don
 The file [dwd.py](../src/dwd.py) is responsable for downloading the zipfiles and converting them to a more flexible format.
 The results are [pandas DataFrames](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas-dataframe) stored as [parquet-files](https://www.youtube.com/watch?v=VZykcApkz_4).
 ![](./images/dataframe.png)
-The date information is converted to `utc` [datetimes](https://docs.python.org/3/library/datetime.html) and all other values are converted either to int or float to reduce file size. To avoid gaps in the data the dataframe is filled with .
+The date information is converted to `utc` [datetimes](https://docs.python.org/3/library/datetime.html) and all other values are converted either to int or float to reduce file size.
+
+### Plotting
+[plot.py](../src/plot.py)
+[Cartopy](https://scitools.org.uk/cartopy/docs/latest/matplotlib/intro.html)
+[matplotlib](https://matplotlib.org/)
+
+### Converting to video
+[imagetovideo.py](../src/imagetovideo.py)
+
+### The Interface
+[excalidraw](https://excalidraw.com/)
+![](./images/interface-mockup.png)
