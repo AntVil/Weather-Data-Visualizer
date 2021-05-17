@@ -23,6 +23,10 @@ To create plots of maps [matplotlib](https://matplotlib.org/) and [Cartopy](http
 ![](./images/cartopy_map.png)
 The map can be cropped to only display germany:
 ![](./images/cartopy_germany.png)
+Using [dwd.py](../src/dwd.py) we can get the coordinates of the stations and plot them on the map:
+![](./images/stations.png)
+The subpackage [matplotlib.tri](https://matplotlib.org/stable/gallery/images_contours_and_fields/irregulardatagrid.html) makes it possible to interpolate values between the stations:
+![](./images/interpolated.png)
 
 [plot.py](../src/plot.py)
 
