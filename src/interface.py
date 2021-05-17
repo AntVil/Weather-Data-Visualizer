@@ -6,7 +6,7 @@ import sys
 import tkinter as Tk
 
 
-class weather_data_interface:
+class Weather_data_interface:
     def __init__(self):
         self.root = Tk.Tk()
         self.root.wm_title("Weather Data")
@@ -48,4 +48,4 @@ class weather_data_interface:
         self.button.pack(side=Tk.BOTTOM)
         Tk.mainloop()
 
-weather_data_interface()
+Weather_data_interface()
