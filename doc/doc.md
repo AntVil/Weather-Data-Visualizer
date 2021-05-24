@@ -40,6 +40,6 @@ can be converted to a `mp4` video like this (converted to `gif` for easy display
 Using [excalidraw](https://excalidraw.com/) a basic wireframe of the interface can be created:
 ![](./images/interface-mockup.png)
 
-Using the library [Eel](https://github.com/ChrisKnott/Eel) an interface can be build using `HTML/CSS/JS`. This library specializes for creating simple interfaces for offline python applications. ([tutorial](https://medium.com/@utsav_datta/create-html-user-interface-for-python-using-eel-library-bab101cc0f99))
+Using the library [Eel](https://github.com/ChrisKnott/Eel) an interface can be build using `HTML/CSS/JS`. This library specializes in creating simple interfaces for offline python applications. ([tutorial](https://medium.com/@utsav_datta/create-html-user-interface-for-python-using-eel-library-bab101cc0f99))
 ![](./images/eel_gui.png)
-Eel helps to strukture the project more and in addition to that it doesn't have as many limitations as Tkinter.
+Eel helps to structure the project more and in addition to that it doesn't have as many limitations as Tkinter.
