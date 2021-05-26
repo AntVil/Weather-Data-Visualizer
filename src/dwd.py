@@ -12,6 +12,7 @@ import datetime
 
 # constants
 DWD_FOLDER = os.path.join(os.path.dirname(__file__), "data", "dwd")
+os.makedirs(DWD_FOLDER, exist_ok = True)
 DWD_URL_HISTORICAL = "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/"
 DWD_URL_RECENT = "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/recent/"
 
@@ -76,8 +77,6 @@ def download_dwd(*urls):
             station_df.TEMPERATURE = pd.to_numeric(station_df.TEMPERATURE, downcast="float")
             station_df.HUMIDITY = pd.to_numeric(station_df.HUMIDITY, downcast="integer")
             station_df.sort_values(by="TIME", inplace=True)
-        
-        print(station_id)
 
         # add coordinates from meta data
         with unpacked.open(meta_data_file, "r") as meta_data:
@@ -94,8 +93,6 @@ def download_dwd(*urls):
             start = station_df.TIME.min().to_pydatetime()
             end = station_df.TIME.max().to_pydatetime() + datetime.timedelta(hours=1)
 
-            print(start, end)
-
             lat = np.array([])
             lon = np.array([])
             asl = np.array([])
@@ -110,9 +107,6 @@ def download_dwd(*urls):
                 c = max((entry.END - end).total_seconds() // 3600 + 24, 0)
                 
                 hours = max(int(a - b - c), 0)
-
-                # print(entry)
-                print("hours:", hours)
 
                 lat = np.append(lat, np.repeat(entry.LAT, hours))
                 lon = np.append(lon, np.repeat(entry.LON, hours))
@@ -135,12 +129,25 @@ def download_dwd(*urls):
 
 
 def get_dwd_DataFrames():
+    """
+    This function returns each pandas.DataFrame downloaded from dwd. (as a generator)
+    """
+
     for file_path in os.listdir(DWD_FOLDER):
         yield pd.read_parquet(os.path.join(DWD_FOLDER, file_path))
 
 
+def data_downloaded():
+    """
+    This function returns wheter all data from dwd is downloaded or not
+    """
+
+    return False
+
+
 if __name__ == "__main__":
-    #download_dwd()
-    for df in get_dwd_DataFrames():
-        print(df)
-        exit()
+    download_dwd()
+    
+    #for df in get_dwd_DataFrames():
+    #    print(df)
+    #    exit()
