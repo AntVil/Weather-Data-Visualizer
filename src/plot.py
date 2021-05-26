@@ -6,6 +6,12 @@ from dwd import get_dwd_DataFrames
 import numpy as np
 
 
+GERMANY_LOACTIONS = {
+    "germany": (5, 16, 56, 46),
+
+}
+
+
 if __name__ == "__main__":
     # plotting map of germany
     ax = plt.axes(projection = cartopy.crs.PlateCarree())
@@ -15,7 +21,7 @@ if __name__ == "__main__":
     ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
     ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
     ax.add_feature(cartopy.feature.RIVERS)
-    ax.set_extent([5, 16, 56, 46])
+    ax.set_extent(GERMANY_LOACTIONS["germany"])
 
     # collecting data from dwd
     x = []
