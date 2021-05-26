@@ -2,22 +2,22 @@
 A tool for visualizing weatherdata
 
 ### TODO:
-- [ ] collect dwd-data
+- [x] collect dwd-data
   - [x] download data
   - [x] format data
   - [x] save data
-  - [x] fix bugs (Anton)
+  - [x] fix bugs
 - [ ] plot data
+  - [ ] create diffrent location plots
+  - [ ] plot data scattered
+  - [ ] plot data interpolated ([matplotlib.tri](https://matplotlib.org/stable/gallery/images_contours_and_fields/irregulardatagrid.html))
+  - [ ] save plots
+- [ ] images to video
+  - [x] example
+  - [ ] plots to video
 - [ ] interface
-  - [ ] design/features (Alexander)
-- [ ] photos -> video (Jan)
-
-### Ideas:
-- dropdown for location selection
-- temperature or humidity
-- time range or point
-- interpolation (if wanted)
-- tkinter (if works)
-- matplotlib
-- pandas: DataFrame
-- open cv
+  - [x] design/features
+  - [x] implement with [eel](https://github.com/ChrisKnott/Eel)
+  - [ ] connect to `main.py`
+  - [ ] display plots in interface
+  - [ ] display plot video in interface
