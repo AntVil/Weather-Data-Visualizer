@@ -3,12 +3,14 @@
     --theme-color-2: #20639B;
     --theme-color-3: #005194;/*#3CAEA3;*/
     --theme-color-4: #F6D55C;
-    --theme-color-5: #ED553B;
+    --theme-color-5: #ee8b49;
+    --text-color-1: #00aeff;
 }
 
 
 *{
     transition: opacity 1s, z-index 1s;
+    color: var(--text-color-1);
 }
 
 
@@ -141,6 +143,8 @@ timeoptions
 timepoint
 */
 #timepoint_options{
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -166,6 +170,8 @@ timepoint
 timerange
 */
 #timerange_options{
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -205,4 +211,39 @@ header>form{
 
 header>form>div{
     grid-column: 1 / span 2;
+}
+
+
+/*
+popup
+*/
+#data_downloaded{
+    display: none;
+}
+
+#popup, #popup_background{
+    display: none;
+}
+
+#data_downloaded:not(:checked)~#popup{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--theme-color-1);
+    border-radius: 5px;
+    padding: 5px;
+    border: 2px solid var(--theme-color-4);
+    display: grid;
+    gap: 5px;
+}
+
+#data_downloaded:not(:checked)~#popup_background{
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000055;
 }

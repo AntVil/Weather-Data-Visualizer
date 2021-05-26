@@ -1,6 +1,24 @@
 # this file is the entry point for the project
 import eel
 import os
+import dwd
+
+
+@eel.expose
+def data_downloaded():
+    return dwd.data_downloaded()
+
+
+@eel.expose
+def download_data():
+    try:
+        dwd.download_dwd(
+            dwd.DWD_URL_HISTORICAL,
+            dwd.DWD_URL_RECENT
+        )
+        return True
+    except:
+        return False
 
 
 @eel.expose

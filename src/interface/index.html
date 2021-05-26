@@ -2,7 +2,7 @@
     <head>
         <title>Wetter-Daten-Visualizer</title>
 
-        <link rel="icon" href="images/logo/logo.ico">
+        <link rel="icon" href="images/logo/logo.png">
         <link rel="stylesheet" href="style.css">
 
         <script src="eel.js"></script>
@@ -10,6 +10,19 @@
     </head>
 
     <body>
+        <input id="data_downloaded" type="checkbox" />
+        <div id="popup_background"></div>
+
+        <section id="popup">
+            <div>
+                This application needs ~2GB of data in the project directory.
+                <br>
+                Should the data be downloaded now?
+            </div>
+            <button onclick="download_data();">download</button>
+            <button onclick="window.close();">cancel</button>
+        </section>
+
         <header>
             <section id="render_options">
                 <input id="dataoptions_temperature" type="radio" name="dataoptions" checked />
@@ -42,7 +55,7 @@
 
                     <input id="timepoint_datetime" type="datetime-local" required />
 
-                    <button onclick="render_timepoint()">render</button>
+                    <button onclick="render_timepoint();">render</button>
                 </form>
                 <form id="timerange_options" onsubmit="return false">
                     <input id="timerange_format_gif" type="radio" name="timerange_format" checked />
@@ -54,7 +67,7 @@
                     <input id="timepoint_datetime_start" type="datetime-local" required />
                     <input id="timepoint_datetime_end" type="datetime-local" required />
 
-                    <button onclick="render_timerange()">render</button>
+                    <button onclick="render_timerange();">render</button>
                 </form>
             </section>
             <div></div>
@@ -64,15 +77,16 @@
                     info
                 </div>
                 <input id="output_file_name" placeholder="filename" required />
-                <button onclick="save()">save</button>
+                <button onclick="save();">save</button>
             </form>
         </header>
+        
         <main>
 
         </main>
-        <footer>
-            <div>Page-Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        </footer>
         
+        <footer>
+            <div>2021 AntVil, Jandorid, A-lex323</div>
+        </footer>
     </body>
 </html>
