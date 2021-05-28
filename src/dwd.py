@@ -11,10 +11,10 @@ import datetime
 
 
 # constants
-DWD_FOLDER = os.path.join(os.path.dirname(__file__), "data", "dwd")
-os.makedirs(DWD_FOLDER, exist_ok = True)
 DWD_URL_HISTORICAL = "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/"
 DWD_URL_RECENT = "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/recent/"
+DWD_FOLDER = os.path.join(os.path.dirname(__file__), "data", "dwd")
+os.makedirs(DWD_FOLDER, exist_ok = True)
 
 
 def get_unpacked_zips(*urls):
@@ -28,9 +28,9 @@ def get_unpacked_zips(*urls):
             yield ZipFile(BytesIO(requests.get(zip_link).content))
 
 
-def download_dwd(*urls):
+def verify_dwd_urls(*urls):
     """
-    this function downloads data from dwd and saves it as an parquet. (default urls are historical & recent)
+    this function tests urls, to check if they are from dwd. (default urls are historical & recent)
     """
 
     if len(urls) == 0:
@@ -42,6 +42,15 @@ def download_dwd(*urls):
     for url in urls:
         if not "https://opendata.dwd.de/" in url:
             raise Exception(f"The url '{url}' is not supported, only urls from 'https://opendata.dwd.de/' are supported.")
+    return urls
+
+
+def download_dwd(*urls):
+    """
+    this function downloads data from dwd and saves it as an parquet. (default urls are historical & recent)
+    """
+
+    urls = verify_dwd_urls(*urls)
     
     for unpacked in get_unpacked_zips(*urls):
         data_files = [f for f in unpacked.namelist() if ".txt" in f]
@@ -137,17 +146,23 @@ def get_dwd_DataFrames():
         yield pd.read_parquet(os.path.join(DWD_FOLDER, file_path))
 
 
-def data_downloaded():
+def dwd_downloaded(*urls):
     """
-    This function returns wheter all data from dwd is downloaded or not
+    This function returns wheter all data from dwd is downloaded or not. (default urls are historical & recent)
     """
 
-    return False
+    urls = verify_dwd_urls(*urls)
+
+    downloaded_stations = set([file[12:17] for file in os.listdir(DWD_FOLDER)])
+    downloadable_stations = set([link[16:21] for url in urls for link in re.findall(r'href="(\w*\.zip)"', str(requests.get(url).content))])
+    
+    return len(downloaded_stations.difference(downloadable_stations)) == 0
 
 
 if __name__ == "__main__":
-    download_dwd()
+    if not dwd_downloaded():
+        download_dwd()
     
-    #for df in get_dwd_DataFrames():
-    #    print(df)
-    #    exit()
+    for df in get_dwd_DataFrames():
+        print(df)
+        exit()
