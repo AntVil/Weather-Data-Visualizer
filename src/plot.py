@@ -8,7 +8,22 @@ import numpy as np
 
 GERMANY_LOACTIONS = {
     "germany": (5, 16, 56, 46),
-
+    "Baden-Württemberg":(7,11,50,47),
+    "Bayern":(8.5,14,51,47),
+    "Berlin":(12.87,13.9,52.8,52.2),
+    "Brandenburg":(11,15.5,53.8,51.1),
+    "Bremen":(8.4,9.1,53.3,52.88),
+    "Hamburg":(9.5,10.55,53.85,53.25),
+    "Hessen":(7.66,10.45,51.8,49.3),
+    "Mecklenburg-Vorpommern":(10.4,14.7,54.85,52.93),
+    "Niedersachsen":(6.5,11.73,54,51.23),
+    "Nordrhein-Westfalen":(5.6,9.65,52.85,50.1),
+    "Rheinland-Pfalz":(5.93,8.54,51.12,48.82),
+    "Saarland":(6.26,7.47,49.75,48.97),
+    "Sachsen":(11.74,15.15,51.76,50.08),
+    "Sachsen-Anhalt":(10.36,13.32,53.11,50.88),
+    "Schleswig-Holstein":(8.07,11.45,55.15,53.26),
+    "Thüringen":(9.64,12.8,51.72,50.15),
 }
 
 
