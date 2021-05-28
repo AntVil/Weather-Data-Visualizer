@@ -1,9 +1,11 @@
 :root{
+    --footer_height: 28px;
+
     --theme-color-1: #173F5F;
     --theme-color-2: #20639B;
-    --theme-color-3: #005194;/*#3CAEA3;*/
+    --theme-color-3: #005194;
     --theme-color-4: #F6D55C;
-    --theme-color-5: #ee8b49;
+    --theme-color-5: #f69a5c;
     --text-color-1: #00aeff;
 }
 
@@ -11,6 +13,21 @@
 *{
     transition: opacity 1s, z-index 1s;
     color: var(--text-color-1);
+}
+
+/*
+page mask
+*/
+#page_mask{
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: 1;
+    transition: opacity 1s, z-index 2s;
 }
 
 
@@ -26,7 +43,7 @@ body{
     height: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr var(--footer_height);
 }
 
 header{
@@ -124,7 +141,7 @@ locationoptions
 /*
 timeoptions
 */
-#timeoptions_timepoint:checked~#timeoptions_timepoint_label, #timeoptions_timerange:checked~#timeoptions_timerange_label{
+#timeoptions_timepoint:checked~header>section>#timeoptions_timepoint_label, #timeoptions_timerange:checked~header>section>#timeoptions_timerange_label{
     background-color: var(--theme-color-5);
 }
 
@@ -133,7 +150,7 @@ timeoptions
     z-index: -1;
 }
 
-#timeoptions_timepoint:checked~#timepoint_options, #timeoptions_timerange:checked~#timerange_options{
+#timeoptions_timepoint:checked~header>section>#timepoint_options, #timeoptions_timerange:checked~header>section>#timerange_options{
     opacity: 1;
     z-index: 1;
 }
@@ -163,6 +180,13 @@ timepoint
 #timepoint_options>button{
     grid-column: 1 / span 2;
     grid-row: 4 / span 1;
+}
+
+#display_timepoint{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 0px;
 }
 
 
@@ -197,6 +221,19 @@ timerange
     grid-row: 4 / span 1;
 }
 
+#display_timerange{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 0px;
+    z-index: 1;
+}
+
+#timeoptions_timepoint:checked~main>#display_timepoint, #timeoptions_timerange:checked~main>#display_timerange{
+    height: calc(100vh - var(--footer_height) - 5px - 5px);
+    padding: 5px;
+}
+
 
 /*
 saveoptions
@@ -221,7 +258,7 @@ popup
     display: none;
 }
 
-#popup, #popup_background{
+#popup, #popup_background_mask{
     display: none;
 }
 
@@ -238,7 +275,7 @@ popup
     gap: 5px;
 }
 
-#data_downloaded:not(:checked)~#popup_background{
+#data_downloaded:not(:checked)~#popup_background_mask{
     display: block;
     position: fixed;
     left: 0;

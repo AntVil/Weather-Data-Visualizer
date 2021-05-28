@@ -6,7 +6,7 @@ import dwd
 
 @eel.expose
 def data_downloaded():
-    return dwd.data_downloaded()
+    return dwd.dwd_downloaded()
 
 
 @eel.expose

@@ -5,6 +5,8 @@ window.onload = function(){
 async function setup(){
     let data_downloaded = await eel.data_downloaded()();
     document.getElementById("data_downloaded").checked = data_downloaded;
+    document.getElementById("page_mask").style.opacity = "0";
+    document.getElementById("page_mask").style.zIndex = "-1";
 }
 
 async function download_data(){

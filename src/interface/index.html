@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Wetter-Daten-Visualizer</title>
@@ -11,7 +12,10 @@
 
     <body>
         <input id="data_downloaded" type="checkbox" />
-        <div id="popup_background"></div>
+        <div id="popup_background_mask"></div>
+
+        <input id="timeoptions_timepoint" type="radio" name="timeoptions" checked />
+        <input id="timeoptions_timerange" type="radio" name="timeoptions" />
 
         <section id="popup">
             <div>
@@ -35,9 +39,7 @@
                     <option>select location</option>
                 </select>
 
-                <input id="timeoptions_unset" type="radio" name="timeoptions" checked />
-                <input id="timeoptions_timepoint" type="radio" name="timeoptions" />
-                <input id="timeoptions_timerange" type="radio" name="timeoptions" />
+                
 
                 <label id="timeoptions_timepoint_label" for="timeoptions_timepoint">timepoint</label>
                 <label id="timeoptions_timerange_label" for="timeoptions_timerange">timerange</label>
@@ -82,11 +84,14 @@
         </header>
         
         <main>
-
+            <img id="display_timepoint" src="data/default/image/germany.png" />
+            <video id="display_timerange" src="data/default/video/germany.mp4" controls></video>
         </main>
         
         <footer>
             <div>2021 AntVil, Jandorid, A-lex323</div>
         </footer>
+
+        <div id="page_mask"></div>
     </body>
 </html>
