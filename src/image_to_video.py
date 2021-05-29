@@ -1,5 +1,5 @@
 # this file contains all components needed to merge images to a video
-import cv2
+import imageio
 import os
 
 
@@ -13,18 +13,18 @@ def image_to_video(image_paths, save_to=os.path.join(VIDEOS_FOLDER, "_test_video
     merges all given images to a video
     """
 
-    size = cv2.imread(image_paths[0]).shape[1::-1]
-
-    out = cv2.VideoWriter(save_to, cv2.VideoWriter_fourcc(*"mp4v"), 12, size)
+    video_writer = imageio.get_writer(save_to, fps=6)
 
     for image_path in image_paths:
-        out.write(cv2.imread(image_path))
+        video_writer.append_data(imageio.imread(image_path))
     
-    out.release()
+    video_writer.close()
 
 
 if __name__ == "__main__":
+    image_folder = os.path.join(os.path.dirname(__file__), "data", "testing", "image")
+
     image_to_video(
-        [os.path.join(IMAGES_FOLDER, f"_test_image_{i}.png") for i in range(25)],
-        os.path.join(VIDEOS_FOLDER, "_test_video.mp4")
+        [os.path.join(image_folder, file) for file in os.listdir(image_folder)],
+        os.path.join(os.path.dirname(__file__), "data", "testing", "video", "_test_video.mp4")
     )
