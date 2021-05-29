@@ -156,7 +156,7 @@ def dwd_downloaded(*urls):
     downloaded_stations = set([file[12:17] for file in os.listdir(DWD_FOLDER)])
     downloadable_stations = set([link[16:21] for url in urls for link in re.findall(r'href="(\w*\.zip)"', str(requests.get(url).content))])
     
-    return len(downloaded_stations.difference(downloadable_stations)) == 0
+    return len(downloadable_stations.difference(downloaded_stations)) == 0
 
 
 if __name__ == "__main__":
