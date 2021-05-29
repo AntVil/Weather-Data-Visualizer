@@ -26,7 +26,7 @@ page mask
     width: 100%;
     height: 100%;
     background-color: #000000;
-    z-index: 1;
+    z-index: 5;
     transition: opacity 1s, z-index 2s;
 }
 
@@ -258,7 +258,12 @@ popup
     display: none;
 }
 
-#popup, #popup_background_mask{
+#popup{
+    display: none;
+    z-index: 3;
+}
+
+#popup_background_mask{
     display: none;
 }
 
@@ -270,7 +275,7 @@ popup
     background-color: var(--theme-color-1);
     border-radius: 5px;
     padding: 5px;
-    border: 2px solid var(--theme-color-4);
+    border: 2px solid var(--theme-color-5);
     display: grid;
     gap: 5px;
 }
@@ -282,5 +287,6 @@ popup
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: #00000055;
+    background-color: #000000AA;
+    z-index: 2;
 }

@@ -10,8 +10,12 @@ async function setup(){
 }
 
 async function download_data(){
-    console.log("downloading data!")
+    let popup_buttons = document.getElementsByClassName("popup_button");
+    for(let i=0;i<popup_buttons.length;i++){
+        popup_buttons[i].disabled = true;
+    }
     let passed = await eel.download_data()();
+    passed = true;
     if(passed){
         document.getElementById("data_downloaded").checked = true;
     }else{
