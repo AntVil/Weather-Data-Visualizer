@@ -4,6 +4,9 @@ from matplotlib import pyplot as plt
 from matplotlib import tri
 from dwd import get_dwd_DataFrames
 import numpy as np
+import os
+import cartopy.io.shapereader as shpreader
+import cartopy.crs as ccrs
 
 
 GERMANY_LOACTIONS = {
@@ -26,6 +29,8 @@ GERMANY_LOACTIONS = {
     "Thüringen": (9.64, 12.8, 51.72, 50.15),
 }
 
+germany_shape = os.path.join(os.path.dirname(__file__),"data","shapes","DEU_adm1.shp")
+adm1_shape = list(shpreader.Reader(germany_shape).geometries())
 
 if __name__ == "__main__":
     # plotting map of germany
@@ -37,7 +42,8 @@ if __name__ == "__main__":
     ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
     ax.add_feature(cartopy.feature.RIVERS)
     ax.set_extent(GERMANY_LOACTIONS["germany"])
-
+    ax.add_geometries(adm1_shape, ccrs.PlateCarree(),
+                  edgecolor='black', facecolor='gray', alpha=0.5)
     # collecting data from dwd
     x = []
     y = []
