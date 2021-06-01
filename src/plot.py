@@ -33,48 +33,47 @@ GERMANY_LOACTIONS = {
 if __name__ == "__main__":
     # plotting map of germany
     
-    for location in GERMANY_LOACTIONS:
 
-        ax = plt.axes(projection = cartopy.crs.PlateCarree())
-        
-        ax.set_extent(GERMANY_LOACTIONS[location])
+    ax = plt.axes(projection = cartopy.crs.PlateCarree())
+    
+    ax.set_extent(GERMANY_LOACTIONS["Germany"])
 
-        ax.add_feature(cartopy.feature.LAND)
-        ax.add_feature(cartopy.feature.OCEAN)
-        ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
-        ax.add_feature(cartopy.feature.RIVERS)
-        ax.add_feature(cartopy.feature.COASTLINE)
-        ax.add_geometries(get_geometry(level=1), ccrs.PlateCarree(), edgecolor='black', facecolor='gray', alpha=0.2)
-        ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
+    ax.add_feature(cartopy.feature.LAND)
+    ax.add_feature(cartopy.feature.OCEAN)
+    ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
+    ax.add_feature(cartopy.feature.RIVERS)
+    ax.add_feature(cartopy.feature.COASTLINE)
+    ax.add_geometries(get_geometry(level=1), ccrs.PlateCarree(), edgecolor='black', facecolor='gray', alpha=0.2)
+    ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
 
-        
-        # collecting data from dwd
-        '''
-        x = []
-        y = []
-        z = []
-        for df in get_dwd_DataFrames():
-            lat = float(df.LON[0])
-            lon = float(df.LAT[0])
-            temperature = float(df.TEMPERATURE[0])
-            if temperature > -50 and temperature < 100:
-                x.append(lat)
-                y.append(lon)
-                z.append(temperature)
+    
+    # collecting data from dwd
+    '''
+    x = []
+    y = []
+    z = []
+    for df in get_dwd_DataFrames():
+        lat = float(df.LON[0])
+        lon = float(df.LAT[0])
+        temperature = float(df.TEMPERATURE[0])
+        if temperature > -50 and temperature < 100:
+            x.append(lat)
+            y.append(lon)
+            z.append(temperature)
 
-        # creating grid
-        xi = np.arange(5, 16, 0.1)
-        yi = np.arange(46, 56, 0.1)
+    # creating grid
+    xi = np.arange(5, 16, 0.1)
+    yi = np.arange(46, 56, 0.1)
 
-        # interpolating vaues on grid
-        interpolator = tri.LinearTriInterpolator(tri.Triangulation(x, y), z)
-        zi = interpolator(*np.meshgrid(xi, yi))
+    # interpolating vaues on grid
+    interpolator = tri.LinearTriInterpolator(tri.Triangulation(x, y), z)
+    zi = interpolator(*np.meshgrid(xi, yi))
 
-        # plotting
-        ax.contourf(xi, yi, zi, levels=14)
-        '''
-        
-        #plt.show()
+    # plotting
+    ax.contourf(xi, yi, zi, levels=14)
+    '''
+    
+    plt.show()
 
-        plt.savefig(f"{location}.png", bbox_inches='tight', pad_inches=0, dpi=900)
-        plt.close()
+    #plt.savefig(f"{location}.png", bbox_inches='tight', pad_inches=0, dpi=900)
+    plt.close()

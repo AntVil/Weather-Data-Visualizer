@@ -4,6 +4,7 @@ import requests
 from zipfile import ZipFile
 from io import BytesIO
 import cartopy.io.shapereader as shpreader
+from requests.api import get
 
 
 # constants
@@ -42,11 +43,15 @@ def get_geometry(level=1):
     """
     this function returns the administrative-area geometries for germany
     """
-    return list(
-        shpreader.Reader(
-            os.path.join(os.path.dirname(__file__), "data", "shapes", f"gadm36_DEU_{level}", "shape")
-        ).geometries()
-    )
+    try:
+        return list(
+            shpreader.Reader(
+                os.path.join(os.path.dirname(__file__), "data", "shapes", f"gadm36_DEU_{level}", "shape")
+            ).geometries()
+        )
+    except:
+        download_shapes()
+        return get_geometry(level)
 
 
 if __name__ == "__main__":
