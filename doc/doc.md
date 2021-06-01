@@ -23,8 +23,12 @@ To create plots of maps [matplotlib](https://matplotlib.org/) and [Cartopy](http
 <br>![](./images/cartopy_map.png)<br>
 The map can be cropped to only display germany:
 <br>![](./images/cartopy_germany.png)<br>
-or any part of germany:
-<br>![image of folder with images here!]()<br>
+By downloading the shapefiles of administrative areas in germany from [GADM](https://gadm.org/download_country_v3.html), more context can be added to the plots:
+<br>![](./images/germany_administrative_areas.png)<br>
+Since the license of `GADM` doesn't permit further distribution the file [shapes.py](../src/shapes.py) downloads and saves the shapefiles locally.
+
+The plot can be further cropped to specific locations:
+<br>![](./images/germany_administrative_areas_folder.png)<br>
 Using [dwd.py](../src/dwd.py) we can get the coordinates of the stations and plot them on the map:
 <br>![](./images/stations.png)<br>
 The subpackage [matplotlib.tri](https://matplotlib.org/stable/gallery/images_contours_and_fields/irregulardatagrid.html) makes it possible to interpolate values between the stations, like temperature:
@@ -42,7 +46,7 @@ The file [image_to_video.py](../src/image_to_video.py) makes this conversion.
 
 ### The Interface
 Using [excalidraw](https://excalidraw.com/) a basic wireframe of the interface can be created:
-<br>![](./images/interface-mockup.png)<br>
+<br>![](./images/interface_mockup.png)<br>
 
 The logo of this project was created using [gimp](https://www.gimp.org/):
 <br>![](./images/gimp_logo.png)<br>
