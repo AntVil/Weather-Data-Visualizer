@@ -3,10 +3,10 @@ import cartopy
 from matplotlib import pyplot as plt
 from matplotlib import tri
 from dwd import get_dwd_DataFrames
+from shapes import get_geometry
 import numpy as np
-import os
-import cartopy.io.shapereader as shpreader
 import cartopy.crs as ccrs
+
 
 
 GERMANY_LOACTIONS = {
@@ -29,42 +29,52 @@ GERMANY_LOACTIONS = {
     "Thüringen": (9.64, 12.8, 51.72, 50.15),
 }
 
-germany_shape = os.path.join(os.path.dirname(__file__),"data","shapes","DEU_adm1.shp")
-adm1_shape = list(shpreader.Reader(germany_shape).geometries())
 
 if __name__ == "__main__":
     # plotting map of germany
-    ax = plt.axes(projection = cartopy.crs.PlateCarree())
-    ax.add_feature(cartopy.feature.LAND)
-    ax.add_feature(cartopy.feature.OCEAN)
-    ax.add_feature(cartopy.feature.COASTLINE)
-    ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
-    ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
-    ax.add_feature(cartopy.feature.RIVERS)
-    ax.set_extent(GERMANY_LOACTIONS["germany"])
-    ax.add_geometries(adm1_shape, ccrs.PlateCarree(),
-                  edgecolor='black', facecolor='gray', alpha=0.5)
-    # collecting data from dwd
-    x = []
-    y = []
-    z = []
-    for df in get_dwd_DataFrames():
-        lat = float(df.LON[0])
-        lon = float(df.LAT[0])
-        temperature = float(df.TEMPERATURE[0])
-        if temperature > -50 and temperature < 100:
-            x.append(lat)
-            y.append(lon)
-            z.append(temperature)
+    
+    for location in GERMANY_LOACTIONS:
 
-    # creating grid
-    xi = np.arange(5, 16, 0.1)
-    yi = np.arange(46, 56, 0.1)
+        ax = plt.axes(projection = cartopy.crs.PlateCarree())
+        
+        ax.set_extent(GERMANY_LOACTIONS[location])
 
-    # interpolating vaues on grid
-    interpolator = tri.LinearTriInterpolator(tri.Triangulation(x, y), z)
-    zi = interpolator(*np.meshgrid(xi, yi))
+        ax.add_feature(cartopy.feature.LAND)
+        ax.add_feature(cartopy.feature.OCEAN)
+        ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
+        ax.add_feature(cartopy.feature.RIVERS)
+        ax.add_feature(cartopy.feature.COASTLINE)
+        ax.add_geometries(get_geometry(level=1), ccrs.PlateCarree(), edgecolor='black', facecolor='gray', alpha=0.2)
+        ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
 
-    # plotting
-    ax.contourf(xi, yi, zi, levels=14)
-    plt.show()
+        
+        # collecting data from dwd
+        '''
+        x = []
+        y = []
+        z = []
+        for df in get_dwd_DataFrames():
+            lat = float(df.LON[0])
+            lon = float(df.LAT[0])
+            temperature = float(df.TEMPERATURE[0])
+            if temperature > -50 and temperature < 100:
+                x.append(lat)
+                y.append(lon)
+                z.append(temperature)
+
+        # creating grid
+        xi = np.arange(5, 16, 0.1)
+        yi = np.arange(46, 56, 0.1)
+
+        # interpolating vaues on grid
+        interpolator = tri.LinearTriInterpolator(tri.Triangulation(x, y), z)
+        zi = interpolator(*np.meshgrid(xi, yi))
+
+        # plotting
+        ax.contourf(xi, yi, zi, levels=14)
+        '''
+        
+        #plt.show()
+
+        plt.savefig(f"{location}.png", bbox_inches='tight', pad_inches=0, dpi=900)
+        plt.close()
