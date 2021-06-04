@@ -4,6 +4,7 @@ import os
 import dwd
 from plot import plot_map
 from image_to_video import image_to_video
+import datetime
 
 
 #constants
@@ -52,14 +53,19 @@ def download_data():
 
 
 @eel.expose
-def render_timepoint():
+def render_timepoint(timestamp, ext):
     """
     creates an plot in "interface/data/temp/image" to be shown on the interface
     """
 
-    print("render_timepoint")
+    timepoint = datetime.datetime.fromtimestamp(timestamp)
+
     clear_dir(INTERFACE_IMAGE_FOLDER)
-    plot_map(INTERFACE_IMAGE_FOLDER)
+
+    filename = f"result.{ext}"
+    #plot_map(os.path.join(INTERFACE_IMAGE_FOLDER, filename), timepoint)
+    
+    return filename
 
 
 @eel.expose
@@ -70,13 +76,13 @@ def render_timerange():
 
     print("render_timerange")
     clear_dir(TEMP_IMAGE_FOLDER)
-    plot_map(TEMP_IMAGE_FOLDER)
+    #plot_map(TEMP_IMAGE_FOLDER)
 
     clear_dir(INTERFACE_VIDEO_FOLDER)
-    image_to_video(
-        [os.path.join(TEMP_IMAGE_FOLDER, file) for file in os.listdir(TEMP_IMAGE_FOLDER)],
-        os.path.join(INTERFACE_VIDEO_FOLDER, "video.mp4")
-    )
+    #image_to_video(
+    #    [os.path.join(TEMP_IMAGE_FOLDER, file) for file in os.listdir(TEMP_IMAGE_FOLDER)],
+    #    os.path.join(INTERFACE_VIDEO_FOLDER, "video.mp4")
+    #)
 
 
 @eel.expose

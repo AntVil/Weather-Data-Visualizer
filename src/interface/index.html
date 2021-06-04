@@ -14,8 +14,8 @@
         <input id="data_downloaded" type="checkbox" />
         <div id="popup_background_mask"></div>
 
-        <input id="timeoptions_timepoint" type="radio" name="timeoptions" checked />
-        <input id="timeoptions_timerange" type="radio" name="timeoptions" />
+        <input id="time_options_timepoint" type="radio" name="time_options" checked />
+        <input id="time_options_timerange" type="radio" name="time_options" />
 
         <section id="popup">
             <div>
@@ -29,20 +29,34 @@
 
         <header>
             <section id="render_options">
-                <input id="dataoptions_temperature" type="radio" name="dataoptions" checked />
-                <input id="dataoptions_humidity" type="radio" name="dataoptions" />
+                <input id="data_options_temperature" type="radio" name="data_options" checked />
+                <input id="data_options_humidity" type="radio" name="data_options" />
                 
-                <label id="dataoptions_temperature_label" for="dataoptions_temperature">Temperature</label>
-                <label id="dataoptions_humidity_label" for="dataoptions_humidity">Humidity</label>
+                <label id="data_options_temperature_label" for="data_options_temperature">Temperature</label>
+                <label id="data_options_humidity_label" for="data_options_humidity">Humidity</label>
 
-                <select id="locationoptions" required>
-                    <option>select location</option>
+                <select id="location_options" required onchange="changeLocation();">
+                    <option>Germany</option>
+                    <option>Baden-Württemberg</option>
+                    <option>Bayern</option>
+                    <option>Berlin</option>
+                    <option>Brandenburg</option>
+                    <option>Bremen</option>
+                    <option>Hamburg</option>
+                    <option>Hessen</option>
+                    <option>Mecklenburg-Vorpommern</option>
+                    <option>Niedersachsen</option>
+                    <option>Nordrhein-Westfalen</option>
+                    <option>Rheinland-Pfalz</option>
+                    <option>Saarland</option>
+                    <option>Sachsen</option>
+                    <option>Sachsen-Anhalt</option>
+                    <option>Schleswig-Holstein</option>
+                    <option>Thüringen</option>
                 </select>
 
-                
-
-                <label id="timeoptions_timepoint_label" for="timeoptions_timepoint">timepoint</label>
-                <label id="timeoptions_timerange_label" for="timeoptions_timerange">timerange</label>
+                <label id="time_options_timepoint_label" for="time_options_timepoint">timepoint</label>
+                <label id="time_options_timerange_label" for="time_options_timerange">timerange</label>
 
                 <form id="timepoint_options" onsubmit="return false">
                     <input id="timepoint_format_png" type="radio" name="timepoint_format" checked />

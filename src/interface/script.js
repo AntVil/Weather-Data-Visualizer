@@ -15,7 +15,6 @@ async function download_data(){
         popup_buttons[i].disabled = true;
     }
     let passed = await eel.download_data()();
-    passed = true;
     if(passed){
         document.getElementById("data_downloaded").checked = true;
     }else{
@@ -25,7 +24,15 @@ async function download_data(){
 
 
 async function render_timepoint(){
-    await eel.render_timepoint()();
+    let timestamp = Math.floor(new Date(document.getElementById("timepoint_datetime").value).valueOf() / 1000)
+    let ext = document.getElementsByName("timepoint_format");
+    for(let i=0;i<ext.length;i++){
+        if(ext[i].checked){
+            ext = ext[i].id.split("_")[2];
+            break;
+        }
+    }
+    await eel.render_timepoint(timestamp, ext)();
     alert("done timepoint");
 }
 
@@ -37,4 +44,10 @@ async function render_timerange(){
 async function save(){
     await eel.save()();
     alert("done saving");
+}
+
+function changeLocation(){
+    let location = document.getElementById("location_options").value;
+    document.getElementById("display_timepoint"). src = `data/default/image/${location}.png`;
+    document.getElementById("display_timerange").src = `data/default/video/${location}.mp4`;
 }
