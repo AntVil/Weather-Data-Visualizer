@@ -6,7 +6,8 @@ from dwd import get_dwd_DataFrames
 from shapes import get_geometry
 import numpy as np
 import cartopy.crs as ccrs
-
+from datetime import datetime as dt, tzinfo
+import pytz
 
 #constants
 GERMANY_LOACTIONS = {
@@ -30,9 +31,14 @@ GERMANY_LOACTIONS = {
 }
 
 
-def plot_map(save_to):
+def plot_map(save_to, data_type, plotting_type, time, location):
     """
     this function 
+
+    data_type needs to be set to "temperature" or "humidity"
+    plotting_type needs to be set to "interpolation" or "scatter"
+    time needs to be single point in time
+    location needs to be a string from GERMANY_LOCATIONS
     """
     pass
 
@@ -40,10 +46,14 @@ def plot_map(save_to):
 if __name__ == "__main__":
     # plotting map of germany
     
+    location = "Thüringen" #testdata, will be from plot_map argument "location"
+    data_type = "temperature"
+    plotting_type = "interpolation"
+    time = dt(2011,3,1,19,0,0,0,pytz.UTC)
 
     ax = plt.axes(projection = cartopy.crs.PlateCarree())
     
-    ax.set_extent(GERMANY_LOACTIONS["Germany"])
+    ax.set_extent(GERMANY_LOACTIONS[location])
 
     ax.add_feature(cartopy.feature.LAND)
     ax.add_feature(cartopy.feature.OCEAN)
@@ -53,32 +63,53 @@ if __name__ == "__main__":
     ax.add_geometries(get_geometry(level=1), ccrs.PlateCarree(), edgecolor='black', facecolor='gray', alpha=0.2)
     ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
 
+
     
     # collecting data from dwd
-    '''
+    
     x = []
     y = []
     z = []
     for df in get_dwd_DataFrames():
-        lat = float(df.LON[0])
-        lon = float(df.LAT[0])
-        temperature = float(df.TEMPERATURE[0])
-        if temperature > -50 and temperature < 100:
-            x.append(lat)
-            y.append(lon)
-            z.append(temperature)
+
+        #gets corresponding data for selected time
+    
+        if df.LON[df["TIME"] == time].values.size != 0: # checks if Pandas.Series object "values" argument is not empty
+            lon = float(df.LON[df["TIME"] == time].values[0]) # assigns value to variable
+        if df.LAT[df["TIME"] == time].values.size != 0:
+            lat = float(df.LAT[df["TIME"] == time].values[0])
+       
+        if data_type == "temperature": #checks for data_type ...
+            if df.TEMPERATURE[df["TIME"] == time].values.size != 0: # ... and datavalue limits
+                temperature = float(df.TEMPERATURE[df["TIME"] == time].values[0])
+            if temperature > -50 and temperature < 100:
+                x.append(lon)
+                y.append(lat)
+                z.append(temperature)
+
+        elif data_type == "humidity":
+            if df.HUMIDITY[df["TIME"] == time].values.size != 0:
+                humidity = float(df.HUMIDITY[df["TIME"] == time].values[0])
+            if humidity >= 0 and humidity <= 100:
+                print("humidity success")
+                x.append(lat)
+                y.append(lon)
+                z.append(humidity)
+
 
     # creating grid
-    xi = np.arange(5, 16, 0.1)
-    yi = np.arange(46, 56, 0.1)
+    xi = np.arange(GERMANY_LOACTIONS[location][0], GERMANY_LOACTIONS[location][1], 0.1)
+    yi = np.arange(GERMANY_LOACTIONS[location][3], GERMANY_LOACTIONS[location][2], 0.1)
 
-    # interpolating vaues on grid
+    
+    
+    # interpolating values on grid
     interpolator = tri.LinearTriInterpolator(tri.Triangulation(x, y), z)
     zi = interpolator(*np.meshgrid(xi, yi))
 
     # plotting
     ax.contourf(xi, yi, zi, levels=14)
-    '''
+    
     
     plt.show()
 
