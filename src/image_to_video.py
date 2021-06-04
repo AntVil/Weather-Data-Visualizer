@@ -3,12 +3,7 @@ import imageio
 import os
 
 
-# constants
-IMAGES_FOLDER = os.path.join(os.path.dirname(__file__), "data", "images")
-VIDEOS_FOLDER = os.path.join(os.path.dirname(__file__), "data", "videos")
-
-
-def image_to_video(image_paths, save_to=os.path.join(VIDEOS_FOLDER, "_test_video.mp4")):
+def image_to_video(image_paths, save_to):
     """
     merges all given images to a video
     """

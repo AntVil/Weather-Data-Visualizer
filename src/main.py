@@ -8,9 +8,10 @@ from image_to_video import image_to_video
 
 #constants
 INTERFACE_FOLDER = os.path.join(os.path.dirname(__file__), "interface")
+INTERFACE_START_FILE = "index.html"
 INTERFACE_IMAGE_FOLDER = os.path.join(INTERFACE_FOLDER, "data", "temp", "image")
 INTERFACE_VIDEO_FOLDER = os.path.join(INTERFACE_FOLDER, "data", "temp", "video")
-TEMP_IMAGE_FOLDER = os.join(os.path.dirname(__file__), "data", "temp", "image")
+TEMP_IMAGE_FOLDER = os.path.join(os.path.dirname(__file__), "data", "temp", "image")
 os.makedirs(INTERFACE_IMAGE_FOLDER, exist_ok=True)
 os.makedirs(INTERFACE_VIDEO_FOLDER, exist_ok=True)
 os.makedirs(TEMP_IMAGE_FOLDER, exist_ok=True)
@@ -28,7 +29,7 @@ def clear_dir(dir):
 @eel.expose
 def data_downloaded():
     """
-    returns if all data from dwd is downloaded
+    returns True if all data from dwd is downloaded
     """
 
     return dwd.dwd_downloaded()
@@ -57,6 +58,7 @@ def render_timepoint():
     """
 
     print("render_timepoint")
+    clear_dir(INTERFACE_IMAGE_FOLDER)
     plot_map(INTERFACE_IMAGE_FOLDER)
 
 
@@ -67,9 +69,10 @@ def render_timerange():
     """
 
     print("render_timerange")
-
+    clear_dir(TEMP_IMAGE_FOLDER)
     plot_map(TEMP_IMAGE_FOLDER)
 
+    clear_dir(INTERFACE_VIDEO_FOLDER)
     image_to_video(
         [os.path.join(TEMP_IMAGE_FOLDER, file) for file in os.listdir(TEMP_IMAGE_FOLDER)],
         os.path.join(INTERFACE_VIDEO_FOLDER, "video.mp4")
@@ -82,4 +85,4 @@ def save():
 
 
 eel.init(INTERFACE_FOLDER)
-eel.start("index.html")
+eel.start(INTERFACE_START_FILE)
