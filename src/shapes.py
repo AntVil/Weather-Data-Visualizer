@@ -17,6 +17,7 @@ def download_shapes():
     """
     this function downloads data from GADM
     """
+
     unpacked = ZipFile(BytesIO(requests.get(SHAPES_URL).content))
     file_names = list(set([file.split(".")[0] for file in unpacked.namelist()]).difference({"license"}))
 
@@ -43,6 +44,7 @@ def get_geometry(level=1):
     """
     this function returns the administrative-area geometries for germany
     """
+    
     try:
         return list(
             shpreader.Reader(
