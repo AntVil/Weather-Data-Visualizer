@@ -8,7 +8,7 @@ import numpy as np
 import cartopy.crs as ccrs
 
 
-
+#constants
 GERMANY_LOACTIONS = {
     "Germany": (5, 16, 56, 46),
     "Baden-Württemberg": (7, 11, 50, 47),
@@ -28,6 +28,13 @@ GERMANY_LOACTIONS = {
     "Schleswig-Holstein": (8.07, 11.45, 55.15, 53.26),
     "Thüringen": (9.64, 12.8, 51.72, 50.15),
 }
+
+
+def plot_map(save_to):
+    """
+    this function 
+    """
+    pass
 
 
 if __name__ == "__main__":
