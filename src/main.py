@@ -53,19 +53,24 @@ def download_data():
 
 
 @eel.expose
-def render_timepoint(timestamp, ext):
+def render_timepoint(data_type, timestamp, location, ext):
     """
     creates an plot in "interface/data/temp/image" to be shown on the interface
     """
 
-    timepoint = datetime.datetime.fromtimestamp(timestamp)
-
     clear_dir(INTERFACE_IMAGE_FOLDER)
 
-    filename = f"result.{ext}"
-    #plot_map(os.path.join(INTERFACE_IMAGE_FOLDER, filename), timepoint)
+    save_to = os.path.join(INTERFACE_IMAGE_FOLDER, f"result.{ext}")
     
-    return filename
+    plot_map(
+        save_to = save_to,
+        data_type = data_type,
+        plotting_type = "interpolation",
+        time = datetime.datetime.fromtimestamp(timestamp, tz=datetime.timezone.utc),
+        location = location
+    )
+    
+    return save_to
 
 
 @eel.expose

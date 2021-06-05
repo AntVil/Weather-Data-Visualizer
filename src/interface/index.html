@@ -71,7 +71,7 @@
 
                     <input id="timepoint_datetime" type="datetime-local" required />
 
-                    <button onclick="render_timepoint();">render</button>
+                    <button id="timepoint_render_button" onclick="render_timepoint();">render</button>
                 </form>
                 <form id="timerange_options" onsubmit="return false">
                     <input id="timerange_format_gif" type="radio" name="timerange_format" checked />
@@ -83,7 +83,7 @@
                     <input id="timepoint_datetime_start" type="datetime-local" required />
                     <input id="timepoint_datetime_end" type="datetime-local" required />
 
-                    <button onclick="render_timerange();">render</button>
+                    <button id="timerange_render_button" onclick="render_timerange();">render</button>
                 </form>
             </section>
             <div></div>

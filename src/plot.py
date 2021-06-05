@@ -49,16 +49,6 @@ def plot_map(save_to, data_type, plotting_type, time, location):
     time needs to be single point in time
     location needs to be a string from GERMANY_LOCATIONS
     """
-    pass
-
-
-if __name__ == "__main__":
-    # plotting map of germany
-    
-    location = "Thüringen" #testdata, will be from plot_map argument "location"
-    data_type = "temperature"
-    plotting_type = "interpolation"
-    time = dt(2011,3,1,19,0,0,0,tzinfo=timezone.utc)
 
     ax = plt.axes(projection = cartopy.crs.PlateCarree())
     
@@ -97,8 +87,6 @@ if __name__ == "__main__":
     xi = np.arange(GERMANY_LOACTIONS[location][0], GERMANY_LOACTIONS[location][1] + 1, 0.1)
     yi = np.arange(GERMANY_LOACTIONS[location][3], GERMANY_LOACTIONS[location][2] + 1, 0.1)
 
-    
-    
     # interpolating values on grid
     interpolator = tri.LinearTriInterpolator(tri.Triangulation(x, y), z)
     zi = interpolator(*np.meshgrid(xi, yi))
@@ -106,8 +94,18 @@ if __name__ == "__main__":
     # plotting
     ax.contourf(xi, yi, zi, levels=14)
     
-    
-    plt.show()
-
-    #plt.savefig(f"{location}.png", bbox_inches='tight', pad_inches=0, dpi=900)
+    if save_to is None:
+        plt.show()
+    else:
+        plt.savefig(save_to, bbox_inches='tight', pad_inches=0, dpi=900)
     plt.close()
+
+
+if __name__ == "__main__":
+    plot_map(
+        save_to = None,
+        data_type = "humidity",
+        plotting_type = "interpolation",
+        time = dt(2011, 1, 1, 1, tzinfo=timezone.utc),
+        location = "Germany"
+    )
