@@ -6,8 +6,9 @@ from dwd import get_dwd_DataFrames
 from shapes import get_geometry
 import numpy as np
 import cartopy.crs as ccrs
-from datetime import datetime as dt, tzinfo
-import pytz
+from datetime import datetime as dt, timezone
+import math
+
 
 #constants
 GERMANY_LOACTIONS = {
@@ -29,6 +30,14 @@ GERMANY_LOACTIONS = {
     "Schleswig-Holstein": (8.07, 11.45, 55.15, 53.26),
     "Thüringen": (9.64, 12.8, 51.72, 50.15),
 }
+LOWER_BOUND = {
+    "temperature": -50,
+    "humidity": 0
+}
+UPPER_BOUND = {
+    "temperature": 100,
+    "humidity": 100
+}
 
 
 def plot_map(save_to, data_type, plotting_type, time, location):
@@ -49,7 +58,7 @@ if __name__ == "__main__":
     location = "Thüringen" #testdata, will be from plot_map argument "location"
     data_type = "temperature"
     plotting_type = "interpolation"
-    time = dt(2011,3,1,19,0,0,0,pytz.UTC)
+    time = dt(2011,3,1,19,0,0,0,tzinfo=timezone.utc)
 
     ax = plt.axes(projection = cartopy.crs.PlateCarree())
     
@@ -63,43 +72,30 @@ if __name__ == "__main__":
     ax.add_geometries(get_geometry(level=1), ccrs.PlateCarree(), edgecolor='black', facecolor='gray', alpha=0.2)
     ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
 
-
     
     # collecting data from dwd
-    
     x = []
     y = []
     z = []
-    for df in get_dwd_DataFrames():
 
-        #gets corresponding data for selected time
-    
-        if df.LON[df["TIME"] == time].values.size != 0: # checks if Pandas.Series object "values" argument is not empty
-            lon = float(df.LON[df["TIME"] == time].values[0]) # assigns value to variable
-        if df.LAT[df["TIME"] == time].values.size != 0:
-            lat = float(df.LAT[df["TIME"] == time].values[0])
-       
-        if data_type == "temperature": #checks for data_type ...
-            if df.TEMPERATURE[df["TIME"] == time].values.size != 0: # ... and datavalue limits
-                temperature = float(df.TEMPERATURE[df["TIME"] == time].values[0])
-            if temperature > -50 and temperature < 100:
+    for df in get_dwd_DataFrames():
+        # calc index in DataFrame (using timestamp)
+        index = math.floor((time.timestamp() - df.TIME[0].timestamp()) // 3600)
+        if index in df.index:
+            lon = float(df.iloc[index].LON)
+            lat = float(df.iloc[index].LAT)
+            # get requested value (either "temperature" or "humidity")
+            value = float(df.iloc[index][data_type.upper()])
+            # check respective bounds
+            if LOWER_BOUND[data_type] <= value < UPPER_BOUND[data_type]:
                 x.append(lon)
                 y.append(lat)
-                z.append(temperature)
-
-        elif data_type == "humidity":
-            if df.HUMIDITY[df["TIME"] == time].values.size != 0:
-                humidity = float(df.HUMIDITY[df["TIME"] == time].values[0])
-            if humidity >= 0 and humidity <= 100:
-                print("humidity success")
-                x.append(lat)
-                y.append(lon)
-                z.append(humidity)
+                z.append(value)
 
 
     # creating grid
-    xi = np.arange(GERMANY_LOACTIONS[location][0], GERMANY_LOACTIONS[location][1], 0.1)
-    yi = np.arange(GERMANY_LOACTIONS[location][3], GERMANY_LOACTIONS[location][2], 0.1)
+    xi = np.arange(GERMANY_LOACTIONS[location][0], GERMANY_LOACTIONS[location][1] + 1, 0.1)
+    yi = np.arange(GERMANY_LOACTIONS[location][3], GERMANY_LOACTIONS[location][2] + 1, 0.1)
 
     
     
