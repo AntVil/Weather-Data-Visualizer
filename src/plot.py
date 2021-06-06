@@ -31,23 +31,23 @@ GERMANY_LOACTIONS = {
     "Thüringen": (9.64, 12.8, 51.72, 50.15),
 }
 LOWER_BOUND = {
-    "temperature": -50,
-    "humidity": 0
+    "Temperature": -50,
+    "Humidity": 0
 }
 UPPER_BOUND = {
-    "temperature": 100,
-    "humidity": 100
+    "Temperature": 100,
+    "Humidity": 100
 }
 
 
-def plot_map(save_to, data_type, plotting_type, time, location):
+def plot_map(save_to, data_type, plot_stations, time, location):
     """
-    this function 
+    this function gets data from get_dwd_DataFrames() and generates the plot image for specified user input
 
-    data_type needs to be set to "temperature" or "humidity"
-    plotting_type needs to be set to "interpolation" or "scatter"
-    time needs to be single point in time
-    location needs to be a string from GERMANY_LOCATIONS
+    data_type requires string "Temperature" or "Humidity"
+    plot_stations requires boolean value (plot weather Station locations: True/False)
+    time requires datetime (dt(...))
+    location requires string from GERMANY_LOCATIONS
     """
 
     ax = plt.axes(projection = cartopy.crs.PlateCarree())
@@ -92,7 +92,29 @@ def plot_map(save_to, data_type, plotting_type, time, location):
     zi = interpolator(*np.meshgrid(xi, yi))
 
     # plotting
-    ax.contourf(xi, yi, zi, levels=14)
+
+    hum_min = 30
+    hum_max = 100
+    temp_min = -20
+    temp_max = 40
+
+    if data_type =="Humidity":
+        levels = np.arange(hum_min, hum_max+1, 5)
+        contour = ax.contourf(xi, yi, zi, levels=levels, vmin=hum_min, vmax=hum_max)
+        label = f"{data_type} in %"
+    if data_type =="Temperature":
+        levels = np.arange(temp_min, temp_max, 2)
+        contour = ax.contourf(xi, yi, zi, levels=levels, vmin=temp_min, vmax=temp_max)
+        label = f"{data_type} in °C"
+
+    plt.colorbar(contour, ax=ax, label=label)
+
+    font = {'family':'sans-serif','size':10}
+    plt.title(time.strftime(f"{location}, %d.%m.%Y"), loc = 'left', fontdict=font)
+
+    if plot_stations:
+        ax.scatter(x,y, color="black", s=3, alpha=.6)
+
     
     if save_to is None:
         plt.show()
@@ -104,8 +126,8 @@ def plot_map(save_to, data_type, plotting_type, time, location):
 if __name__ == "__main__":
     plot_map(
         save_to = None,
-        data_type = "humidity",
-        plotting_type = "interpolation",
-        time = dt(2011, 1, 1, 1, tzinfo=timezone.utc),
+        data_type = "Humidity",
+        plot_stations = False,
+        time = dt(2011, 7, 7, 1, tzinfo=timezone.utc),
         location = "Germany"
     )
