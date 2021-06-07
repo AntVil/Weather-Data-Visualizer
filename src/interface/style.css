@@ -141,6 +141,12 @@ locationoptions
     padding: 5px;
 }
 
+/*
+
+*/
+#station_options_hidden:checked~#station_options_hidden_label, #station_options_visable:checked~#station_options_visable_label{
+    background-color: var(--theme-color-5);
+}
 
 /*
 timeoptions
@@ -165,7 +171,7 @@ timepoint
 */
 #timepoint_options{
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -196,7 +202,7 @@ timerange
 */
 #timerange_options{
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;

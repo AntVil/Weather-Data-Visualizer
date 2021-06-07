@@ -33,6 +33,7 @@ async function render_timepoint(){
     }
     let timestamp = Math.floor(new Date(document.getElementById("timepoint_datetime").value).valueOf() / 1000)
     let location = document.getElementById("location_options").value;
+    let plot_stations = document.getElementById("station_options_visable").checked;
     let ext = document.getElementsByName("timepoint_format");
     for(let i=0;i<ext.length;i++){
         if(ext[i].checked){
@@ -41,7 +42,13 @@ async function render_timepoint(){
         }
     }
     
-    await eel.render_timepoint(data_type, timestamp, location, ext)();
+    await eel.render_timepoint(
+        data_type,
+        plot_stations,
+        timestamp,
+        location,
+        ext
+    )();
     
     document.getElementById("display_timepoint").src = `data/temp/image/result.${ext}`;
     document.getElementById("timepoint_render_button").disabled = false;

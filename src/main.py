@@ -53,7 +53,7 @@ def download_data():
 
 
 @eel.expose
-def render_timepoint(data_type, timestamp, location, ext):
+def render_timepoint(data_type, plot_stations, timestamp, location, ext):
     """
     creates an plot in "interface/data/temp/image" to be shown on the interface
     """
@@ -65,7 +65,7 @@ def render_timepoint(data_type, timestamp, location, ext):
     plot_map(
         save_to = save_to,
         data_type = data_type,
-        plotting_type = "interpolation",
+        plot_stations = plot_stations,
         time = datetime.datetime.fromtimestamp(timestamp, tz=datetime.timezone.utc),
         location = location
     )

@@ -1,7 +1,6 @@
 # this file contains all components needed to plot data on a map
 import cartopy
-from matplotlib import pyplot as plt
-from matplotlib import tri
+from matplotlib import pyplot as plt, tri, cm
 from dwd import get_dwd_DataFrames
 from shapes import get_geometry
 import numpy as np
@@ -31,12 +30,20 @@ GERMANY_LOACTIONS = {
     "Thüringen": (9.64, 12.8, 51.72, 50.15),
 }
 LOWER_BOUND = {
-    "Temperature": -50,
-    "Humidity": 0
+    "TEMPERATURE": -40,
+    "HUMIDITY": 0
 }
 UPPER_BOUND = {
-    "Temperature": 100,
-    "Humidity": 100
+    "TEMPERATURE": 40,
+    "HUMIDITY": 100
+}
+COLORMAP = {
+    "TEMPERATURE": cm.coolwarm,
+    "HUMIDITY": cm.Blues
+}
+LABEL = {
+    "TEMPERATURE": "Temperature in °C",
+    "HUMIDITY": "Humidity in %"
 }
 
 
@@ -50,24 +57,27 @@ def plot_map(save_to, data_type, plot_stations, time, location):
     location requires string from GERMANY_LOCATIONS
     """
 
-    ax = plt.axes(projection = cartopy.crs.PlateCarree())
-    
-    ax.set_extent(GERMANY_LOACTIONS[location])
+    data_type = data_type.upper()
 
+    fig = plt.figure()
+    ax = plt.axes(
+        projection = cartopy.crs.PlateCarree()
+    )
+    
+    # setting up background
+    ax.set_extent(GERMANY_LOACTIONS[location])
     ax.add_feature(cartopy.feature.LAND)
     ax.add_feature(cartopy.feature.OCEAN)
-    ax.add_feature(cartopy.feature.LAKES, alpha=0.5)
+    ax.add_feature(cartopy.feature.LAKES, alpha = 0.5)
     ax.add_feature(cartopy.feature.RIVERS)
     ax.add_feature(cartopy.feature.COASTLINE)
-    ax.add_geometries(get_geometry(level=1), ccrs.PlateCarree(), edgecolor='black', facecolor='gray', alpha=0.2)
-    ax.add_feature(cartopy.feature.BORDERS, linestyle=':')
+    ax.add_geometries(get_geometry(level = 1), ccrs.PlateCarree(), edgecolor = "black", facecolor = "gray", alpha = 0.2)
+    ax.add_feature(cartopy.feature.BORDERS, linestyle = ":")
 
-    
     # collecting data from dwd
     x = []
     y = []
     z = []
-
     for df in get_dwd_DataFrames():
         # calc index in DataFrame (using timestamp)
         index = math.floor((time.timestamp() - df.TIME[0].timestamp()) // 3600)
@@ -75,13 +85,12 @@ def plot_map(save_to, data_type, plot_stations, time, location):
             lon = float(df.iloc[index].LON)
             lat = float(df.iloc[index].LAT)
             # get requested value (either "temperature" or "humidity")
-            value = float(df.iloc[index][data_type.upper()])
+            value = float(df.iloc[index][data_type])
             # check respective bounds
             if LOWER_BOUND[data_type] <= value < UPPER_BOUND[data_type]:
                 x.append(lon)
                 y.append(lat)
                 z.append(value)
-
 
     # creating grid
     xi = np.arange(GERMANY_LOACTIONS[location][0], GERMANY_LOACTIONS[location][1] + 1, 0.1)
@@ -92,42 +101,58 @@ def plot_map(save_to, data_type, plot_stations, time, location):
     zi = interpolator(*np.meshgrid(xi, yi))
 
     # plotting
-
-    hum_min = 30
-    hum_max = 100
-    temp_min = -20
-    temp_max = 40
-
-    if data_type =="Humidity":
-        levels = np.arange(hum_min, hum_max+1, 5)
-        contour = ax.contourf(xi, yi, zi, levels=levels, vmin=hum_min, vmax=hum_max)
-        label = f"{data_type} in %"
-    if data_type =="Temperature":
-        levels = np.arange(temp_min, temp_max, 2)
-        contour = ax.contourf(xi, yi, zi, levels=levels, vmin=temp_min, vmax=temp_max)
-        label = f"{data_type} in °C"
-
-    plt.colorbar(contour, ax=ax, label=label)
-
-    font = {'family':'sans-serif','size':10}
-    plt.title(time.strftime(f"{location}, %d.%m.%Y"), loc = 'left', fontdict=font)
-
-    if plot_stations:
-        ax.scatter(x,y, color="black", s=3, alpha=.6)
-
+    contour = ax.contourf(
+        xi,
+        yi,
+        zi,
+        levels = np.arange(LOWER_BOUND[data_type], UPPER_BOUND[data_type] + 1, 5),
+        vmin = LOWER_BOUND[data_type],
+        vmax = UPPER_BOUND[data_type],
+        cmap = COLORMAP[data_type]
+    )
     
+    #adding colorbar
+    cax = fig.add_axes([ax.get_position().x1, ax.get_position().y0, 0.05, ax.get_position().height])
+    cax.tick_params(direction="in", pad=-20, labelsize=8)
+    plt.colorbar(contour, cax=cax)
+
+    # removing ticks at edges
+    cax.set_yticklabels(
+        ["" if abs(int(text.get_text().replace("−", "-")) - LOWER_BOUND[data_type]) < 1 or abs(int(text.get_text().replace("−", "-")) - UPPER_BOUND[data_type]) < 1 else text.get_text() for text in cax.get_yticklabels()]
+    )
+    
+    if plot_stations:
+        ax.scatter(x, y, color = "black", s = 3, alpha = 0.6)
+
+    # adding title/info
+    ax.legend(
+        handles=[],
+        title=time.strftime(f"{data_type}, {location}, %Y.%m.%d %H:00"),
+        loc=2,
+        prop={
+            "family": "monospace"
+        }
+    )
+
     if save_to is None:
         plt.show()
     else:
-        plt.savefig(save_to, bbox_inches='tight', pad_inches=0, dpi=900)
+        plt.savefig(save_to, bbox_inches = "tight", pad_inches = 0, dpi = 900)
     plt.close()
 
 
 if __name__ == "__main__":
     plot_map(
         save_to = None,
+        data_type = "Temperature",
+        plot_stations = False,
+        time = dt(2011, 7, 7, 1, tzinfo = timezone.utc),
+        location = "Germany"
+    )
+    plot_map(
+        save_to = None,
         data_type = "Humidity",
         plot_stations = False,
-        time = dt(2011, 7, 7, 1, tzinfo=timezone.utc),
+        time = dt(2011, 7, 7, 1, tzinfo = timezone.utc),
         location = "Germany"
     )
