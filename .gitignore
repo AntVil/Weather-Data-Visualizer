@@ -3,5 +3,6 @@ venv/
 lib/
 src/data/dwd
 src/data/shapes
+src/data/temp
 src/interface/data/temp
 *.pyc

@@ -31,7 +31,8 @@ async function render_timepoint(){
     if(document.getElementById("data_options_humidity").checked){
         data_type = "humidity";
     }
-    let timestamp = Math.floor(new Date(document.getElementById("timepoint_datetime").value).valueOf() / 1000)
+    let date = new Date(document.getElementById("timepoint_datetime").value);
+    let timestamp = Math.floor((date.getTime()) / 1000 - date.getTimezoneOffset()*60);
     let location = document.getElementById("location_options").value;
     let plot_stations = document.getElementById("station_options_visable").checked;
     let ext = document.getElementsByName("timepoint_format");
@@ -56,13 +57,68 @@ async function render_timepoint(){
 }
 
 async function render_timerange(){
-    await eel.render_timerange()();
-    alert("done timerange");
+    document.getElementById("timepoint_render_button").disabled = true;
+    document.getElementById("timerange_render_button").disabled = true;
+
+    let data_type = "temperature";
+    if(document.getElementById("data_options_humidity").checked){
+        data_type = "humidity";
+    }
+    let date1 = new Date(document.getElementById("timepoint_datetime_start").value);
+    let date2 = new Date(document.getElementById("timepoint_datetime_end").value);
+    let timestamp1 = Math.floor((date1.getTime()) / 1000 - date1.getTimezoneOffset()*60);
+    let timestamp2 = Math.floor((date2.getTime()) / 1000 - date2.getTimezoneOffset()*60);
+    let location = document.getElementById("location_options").value;
+    let plot_stations = document.getElementById("station_options_visable").checked;
+    let ext = document.getElementsByName("timerange_format");
+    for(let i=0;i<ext.length;i++){
+        if(ext[i].checked){
+            ext = ext[i].id.split("_")[2];
+            break;
+        }
+    }
+
+    await eel.render_timerange(
+        data_type,
+        plot_stations,
+        timestamp1,
+        timestamp2,
+        location,
+        ext
+    )();
+    
+    document.getElementById("display_timerange").src = `data/temp/video/result.${ext}`;
+    document.getElementById("timepoint_render_button").disabled = false;
+    document.getElementById("timerange_render_button").disabled = false;
 }
 
 async function save(){
-    await eel.save()();
-    alert("done saving");
+    let folder;
+    let ext;
+    if(document.getElementById("time_options_timepoint").checked){
+        folder = "image"
+        ext = document.getElementsByName("timepoint_format");
+        for(let i=0;i<ext.length;i++){
+            if(ext[i].checked){
+                ext = ext[i].id.split("_")[2];
+                break;
+            }
+        }
+    }else{
+        folder = "video"
+        ext = document.getElementsByName("timerange_format");
+        for(let i=0;i<ext.length;i++){
+            if(ext[i].checked){
+                ext = ext[i].id.split("_")[2];
+                break;
+            }
+        }
+    }
+
+    let link = document.createElement("a");
+    link.setAttribute("href", `data/temp/${folder}/result.${ext}`);
+    link.setAttribute("download", `result.${ext}`);
+    link.click();
 }
 
 function changeLocation(){

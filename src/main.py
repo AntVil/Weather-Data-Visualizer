@@ -59,9 +59,8 @@ def render_timepoint(data_type, plot_stations, timestamp, location, ext):
     """
 
     clear_dir(INTERFACE_IMAGE_FOLDER)
-
     save_to = os.path.join(INTERFACE_IMAGE_FOLDER, f"result.{ext}")
-    
+
     plot_map(
         save_to = save_to,
         data_type = data_type,
@@ -69,30 +68,29 @@ def render_timepoint(data_type, plot_stations, timestamp, location, ext):
         time = datetime.datetime.fromtimestamp(timestamp, tz=datetime.timezone.utc),
         location = location
     )
-    
-    return save_to
 
 
 @eel.expose
-def render_timerange():
+def render_timerange(data_type, plot_stations, timestamp1, timestamp2, location, ext):
     """
     creates mutiple plots and fuses them to a video in "interface/data/temp/video" to be shown on the interface
     """
 
-    print("render_timerange")
     clear_dir(TEMP_IMAGE_FOLDER)
-    #plot_map(TEMP_IMAGE_FOLDER)
+    for timestamp in range(timestamp1, timestamp2, 3600):
+        plot_map(
+            save_to = os.path.join(TEMP_IMAGE_FOLDER, str(timestamp).zfill(12) + ".png"),
+            data_type = data_type,
+            plot_stations = plot_stations,
+            time = datetime.datetime.fromtimestamp(timestamp, tz=datetime.timezone.utc),
+            location = location
+        )
 
     clear_dir(INTERFACE_VIDEO_FOLDER)
-    #image_to_video(
-    #    [os.path.join(TEMP_IMAGE_FOLDER, file) for file in os.listdir(TEMP_IMAGE_FOLDER)],
-    #    os.path.join(INTERFACE_VIDEO_FOLDER, "video.mp4")
-    #)
-
-
-@eel.expose
-def save():
-    print("save")
+    image_to_video(
+        [os.path.join(TEMP_IMAGE_FOLDER, file) for file in sorted(os.listdir(TEMP_IMAGE_FOLDER))],
+        os.path.join(INTERFACE_VIDEO_FOLDER, f"result.{ext}")
+    )
 
 
 eel.init(INTERFACE_FOLDER)

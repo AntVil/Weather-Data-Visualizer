@@ -38,7 +38,7 @@ UPPER_BOUND = {
     "HUMIDITY": 100
 }
 COLORMAP = {
-    "TEMPERATURE": cm.coolwarm,
+    "TEMPERATURE": cm.jet,
     "HUMIDITY": cm.Blues
 }
 LABEL = {
@@ -105,7 +105,7 @@ def plot_map(save_to, data_type, plot_stations, time, location):
         xi,
         yi,
         zi,
-        levels = np.arange(LOWER_BOUND[data_type], UPPER_BOUND[data_type] + 1, 5),
+        levels = np.arange(LOWER_BOUND[data_type], UPPER_BOUND[data_type] + 1, 2),
         vmin = LOWER_BOUND[data_type],
         vmax = UPPER_BOUND[data_type],
         cmap = COLORMAP[data_type]
@@ -117,9 +117,14 @@ def plot_map(save_to, data_type, plot_stations, time, location):
     plt.colorbar(contour, cax=cax)
 
     # removing ticks at edges
-    cax.set_yticklabels(
-        ["" if abs(int(text.get_text().replace("−", "-")) - LOWER_BOUND[data_type]) < 1 or abs(int(text.get_text().replace("−", "-")) - UPPER_BOUND[data_type]) < 1 else text.get_text() for text in cax.get_yticklabels()]
-    )
+    labels = []
+    for text in cax.get_yticklabels():
+        value = int(text.get_text().replace("−", "-"))
+        if min(abs(value - LOWER_BOUND[data_type]), abs(value - UPPER_BOUND[data_type])) < 1:
+            labels.append("")
+        else:
+            labels.append(value)
+    cax.set_yticklabels(labels)
     
     if plot_stations:
         ax.scatter(x, y, color = "black", s = 3, alpha = 0.6)

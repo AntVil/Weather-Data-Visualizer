@@ -178,18 +178,18 @@ timepoint
     gap: 5px;
 }
 
-#timepoint_format_png:checked~#timepoint_format_png_label, #timepoint_format_jpg:checked~#timepoint_format_jpg_label, #timepoint_format_pdf:checked~#timepoint_format_pdf_label, #timepoint_format_svg:checked~#timepoint_format_svg_label{
+#timepoint_format_png:checked~#timepoint_format_png_label, #timepoint_format_jpg:checked~#timepoint_format_jpg_label{
     background-color: var(--theme-color-5);
 }
 
 #timepoint_datetime{
     grid-column: 1 / span 2;
-    grid-row: 3 / span 1;
+    grid-row: 2 / span 1;
 }
 
 #timepoint_options>button{
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 3 / span 1;
 }
 
 #display_timepoint{
@@ -204,27 +204,24 @@ timerange
     grid-column: 1 / span 2;
     grid-row: 5 / span 1;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 5px;
 }
 
-#timerange_format_gif:checked~#timerange_format_gif_label, #timerange_format_mp4:checked~#timerange_format_mp4_label{
+#timerange_format_mp4:checked~#timerange_format_mp4_label{
     background-color: var(--theme-color-5);
 }
 
 #timepoint_datetime_start{
-    grid-column: 1 / span 2;
     grid-row: 2 / span 1;
 }
 
 #timepoint_datetime_end{
-    grid-column: 1 / span 2;
     grid-row: 3 / span 1;
 }
 
 #timerange_options>button{
-    grid-column: 1 / span 2;
     grid-row: 4 / span 1;
 }
 
@@ -247,18 +244,14 @@ timerange
 
 
 /*
-saveoptions
+save
 */
 header>form{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     gap: 5px;
     margin: 0;
-}
-
-header>form>div{
-    grid-column: 1 / span 2;
 }
 
 

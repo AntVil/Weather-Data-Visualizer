@@ -67,23 +67,17 @@
                 <form id="timepoint_options" onsubmit="return false">
                     <input id="timepoint_format_png" type="radio" name="timepoint_format" checked />
                     <input id="timepoint_format_jpg" type="radio" name="timepoint_format" />
-                    <input id="timepoint_format_pdf" type="radio" name="timepoint_format" />
-                    <input id="timepoint_format_svg" type="radio" name="timepoint_format" />
 
                     <label id="timepoint_format_png_label" for="timepoint_format_png">PNG</label>
                     <label id="timepoint_format_jpg_label" for="timepoint_format_jpg">JPG</label>
-                    <label id="timepoint_format_pdf_label" for="timepoint_format_pdf">PDF</label>
-                    <label id="timepoint_format_svg_label" for="timepoint_format_svg">SVG</label>
 
                     <input id="timepoint_datetime" type="datetime-local" required />
 
                     <button id="timepoint_render_button" onclick="render_timepoint();">render</button>
                 </form>
                 <form id="timerange_options" onsubmit="return false">
-                    <input id="timerange_format_gif" type="radio" name="timerange_format" checked />
-                    <input id="timerange_format_mp4" type="radio" name="timerange_format" />
+                    <input id="timerange_format_mp4" type="radio" name="timerange_format" checked />
 
-                    <label id="timerange_format_gif_label" for="timerange_format_gif">GIF</label>
                     <label id="timerange_format_mp4_label" for="timerange_format_mp4">MP4</label>
 
                     <input id="timepoint_datetime_start" type="datetime-local" required />
@@ -94,11 +88,6 @@
             </section>
             <div></div>
             <form onsubmit="return false">
-                <div id="output_info">
-                    output_info<br>
-                    info
-                </div>
-                <input id="output_file_name" placeholder="filename" required />
                 <button onclick="save();">save</button>
             </form>
         </header>
