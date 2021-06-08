@@ -32,17 +32,24 @@ The plot can be further cropped to specific locations:
 Using [dwd.py](../src/dwd.py) we can get the coordinates of the stations and plot them on the map:
 <br>![](./images/stations.png)<br>
 The subpackage [matplotlib.tri](https://matplotlib.org/stable/gallery/images_contours_and_fields/irregulardatagrid.html) makes it possible to interpolate values between the stations, like temperature:
-<br>![](./images/interpolated.png)<br>
+<br>![](./images/temperature_germany.png)<br>
+or humidity:
+<br>![](./images/humidity_germany.png)<br>
 
-The file [plot.py](../src/plot.py) is responsable for 
+The file [plot.py](../src/plot.py) is responsable for creating these plots.
 
 ### Converting to video
 Using [imageio](https://imageio.readthedocs.io/en/stable/) and the special plugin `imageio-ffmpeg` images like these:
 <br>![](./images/test_images.png)<br>
-can be converted to a `mp4` video or `gif` like this (`gif` for easy display):
+can be converted to a video like this (`gif` for easy display):
 <br>![](./images/test_video_as_gif.gif)<br>
 
 The file [image_to_video.py](../src/image_to_video.py) makes this conversion.
+
+Using the plots as inputs we can convert our plots:
+<br>![](./images/germany_plots_folder.png)<br>
+to a video (`gif` for easy display):
+<br>![](./images/temperature_germany_video.gif)<br>
 
 ### The Interface
 Using [excalidraw](https://excalidraw.com/) a basic wireframe of the interface can be created:
