@@ -21,3 +21,7 @@ A tool for visualizing weatherdata
   - [ ] connect to `main.py`
   - [ ] display plots in interface
   - [ ] display plot video in interface
+  - [ ] show loading animation while rendering
+
+### BUG-FIXING:
+- [ ] save button tried saving empty files if no picture/video was rendered (possible solution: deactivate button if no picture/video was rendered)
