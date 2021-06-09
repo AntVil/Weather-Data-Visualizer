@@ -7,21 +7,25 @@ A tool for visualizing weatherdata
   - [x] format data
   - [x] save data
   - [x] fix bugs
-- [ ] plot data
-  - [ ] create diffrent location plots
-  - [ ] plot data scattered
-  - [ ] plot data interpolated ([matplotlib.tri](https://matplotlib.org/stable/gallery/images_contours_and_fields/irregulardatagrid.html))
-  - [ ] save plots
-- [ ] images to video
+- [x] plot data
+  - [x] create diffrent location plots
+  - [x] plot data scattered
+  - [x] plot data interpolated ([matplotlib.tri](https://matplotlib.org/stable/gallery/images_contours_and_fields/irregulardatagrid.html))
+  - [x] save plots
+- [x] images to video
   - [x] example
-  - [ ] plots to video
+  - [x] plots to video
 - [ ] interface
   - [x] design/features
   - [x] implement with [eel](https://github.com/ChrisKnott/Eel)
-  - [ ] connect to `main.py`
-  - [ ] display plots in interface
-  - [ ] display plot video in interface
+  - [x] connect to `main.py`
+  - [x] display plots in interface
+  - [x] display plot video in interface
   - [ ] show loading animation while rendering
+- [ ] doc
+  - [x] doc dev process
+  - [x] doc dependencies
+  - [ ] doc results
 
 ### BUG-FIXING:
 - [ ] save button tried saving empty files if no picture/video was rendered (possible solution: deactivate button if no picture/video was rendered)

@@ -1,9 +1,26 @@
 # Weather-Data-Visualizer
+A tool for visualizing weatherdata
+*created by: Anton Böhler, Jan Broer, Alexander Dietrich*
 
+## Overview
+### In-scope
+- downloading data from [dwd](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/)
+- unzip data
+- format & clean data
+- plots of moments in time
+- videos of time ranges
+- interface for user-input
 
+### Out-of-scope
+- multiple weatherdata sources
+- location detection
+- select concrete locations
+- satellite images
 
-## Project
+### Goal
+The goal of this project is to visualize the archived weatherdata from dwd using an intuitive interface. The resulting images or videos can then be saved. The software should run locally on ones machine. It should work on systems like `mac` or `linux`, but was created and tested soly on `windows`.
 
+## Implementation
 ### The data
 The data is located on the [dwd server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/), accessing their website we get this view:
 <br>![](./images/data.png)<br>
@@ -66,7 +83,22 @@ Using the library [Eel](https://github.com/ChrisKnott/Eel) an interface can be b
 <br>![](./images/eel_gui.png)<br>
 Eel helps to structure the project more and in addition to that it doesn't have as many limitations as Tkinter.
 
+## Result
+### Summary
+- 
+
+### Known issues
+- 
+
+### Potential features
+- 
+
 ## Dependencies
+### System dependencies
+- Web-Browser
+- Python 3.8
+
+### Python dependencies
 - bottle
 - bottle-websocket
 - Cartopy
