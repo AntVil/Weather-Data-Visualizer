@@ -1,5 +1,9 @@
 # Weather-Data-Visualizer
 
+
+
+## Project
+
 ### The data
 The data is located on the [dwd server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/), accessing their website we get this view:
 <br>![](./images/data.png)<br>
@@ -61,3 +65,39 @@ The logo of this project was created using [gimp](https://www.gimp.org/):
 Using the library [Eel](https://github.com/ChrisKnott/Eel) an interface can be build using `HTML/CSS/JS`. This library specializes in creating simple interfaces for offline python applications. ([tutorial](https://medium.com/@utsav_datta/create-html-user-interface-for-python-using-eel-library-bab101cc0f99))
 <br>![](./images/eel_gui.png)<br>
 Eel helps to structure the project more and in addition to that it doesn't have as many limitations as Tkinter.
+
+## Dependencies
+- bottle
+- bottle-websocket
+- Cartopy
+- certifi
+- cffi
+- chardet
+- cycler
+- Eel
+- future
+- gevent
+- gevent-websocket
+- greenlet
+- idna
+- imageio
+- imageio-ffmpeg
+- kiwisolver
+- matplotlib
+- numpy
+- pandas
+- Pillow
+- pyarrow
+- pycparser
+- pyparsing
+- pyshp
+- python-dateutil
+- pytz
+- requests
+- scipy
+- Shapely
+- six
+- urllib3
+- whichcraft
+- zope.event
+- zope.interface
