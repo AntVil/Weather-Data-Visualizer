@@ -2,6 +2,8 @@
 A tool for visualizing weatherdata
 *created by: Anton Böhler, Jan Broer, Alexander Dietrich*
 
+view on [github](https://github.com/AntVil/Weather-Data-Visualizer)
+
 ## Overview
 ### In-scope
 - downloading data from [dwd](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/)
@@ -88,10 +90,12 @@ Eel helps to structure the project more and in addition to that it doesn't have 
 - 
 
 ### Known issues
-- 
+- lack of speed
+- no automatic downloading of new data after first setup
 
 ### Potential features
-- 
+- optimize data structuring
+- optimize plotting speed
 
 ## Dependencies
 ### System dependencies
