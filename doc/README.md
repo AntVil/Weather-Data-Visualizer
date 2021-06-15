@@ -28,4 +28,3 @@ A tool for visualizing weatherdata
   - [ ] doc results
 
 ### BUG-FIXING:
-- [ ] save button tried saving empty files if no picture/video was rendered (possible solution: deactivate button if no picture/video was rendered)

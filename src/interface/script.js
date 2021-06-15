@@ -26,6 +26,7 @@ async function download_data(){
 async function render_timepoint(){
     document.getElementById("timepoint_render_button").disabled = true;
     document.getElementById("timerange_render_button").disabled = true;
+    document.getElementById("save_button").disabled = true;
     
     let data_type = "temperature";
     if(document.getElementById("data_options_humidity").checked){
@@ -54,11 +55,13 @@ async function render_timepoint(){
     document.getElementById("display_timepoint").src = `data/temp/image/result.${ext}`;
     document.getElementById("timepoint_render_button").disabled = false;
     document.getElementById("timerange_render_button").disabled = false;
+    document.getElementById("save_button").disabled = false;
 }
 
 async function render_timerange(){
     document.getElementById("timepoint_render_button").disabled = true;
     document.getElementById("timerange_render_button").disabled = true;
+    document.getElementById("save_button").disabled = true;
 
     let data_type = "temperature";
     if(document.getElementById("data_options_humidity").checked){
@@ -90,34 +93,19 @@ async function render_timerange(){
     document.getElementById("display_timerange").src = `data/temp/video/result.${ext}`;
     document.getElementById("timepoint_render_button").disabled = false;
     document.getElementById("timerange_render_button").disabled = false;
+    document.getElementById("save_button").disabled = false;
 }
 
 async function save(){
-    let folder;
-    let ext;
-    if(document.getElementById("time_options_timepoint").checked){
-        folder = "image"
-        ext = document.getElementsByName("timepoint_format");
-        for(let i=0;i<ext.length;i++){
-            if(ext[i].checked){
-                ext = ext[i].id.split("_")[2];
-                break;
-            }
-        }
-    }else{
-        folder = "video"
-        ext = document.getElementsByName("timerange_format");
-        for(let i=0;i<ext.length;i++){
-            if(ext[i].checked){
-                ext = ext[i].id.split("_")[2];
-                break;
-            }
-        }
-    }
-
     let link = document.createElement("a");
-    link.setAttribute("href", `data/temp/${folder}/result.${ext}`);
-    link.setAttribute("download", `result.${ext}`);
+    let file;
+    if(document.getElementById("time_options_timepoint").checked){
+        file = document.getElementById("display_timepoint").src
+    }else{
+        file = document.getElementById("display_timerange").src
+    }
+    link.setAttribute("href", file);
+    link.setAttribute("download", file.split("/").slice(-1)[0]);
     link.click();
 }
 
