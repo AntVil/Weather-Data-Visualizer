@@ -15,13 +15,13 @@ A tool for visualizing weatherdata
 - [x] images to video
   - [x] example
   - [x] plots to video
-- [ ] interface
+- [x] interface
   - [x] design/features
   - [x] implement with [eel](https://github.com/ChrisKnott/Eel)
   - [x] connect to `main.py`
   - [x] display plots in interface
   - [x] display plot video in interface
-  - [ ] show loading animation while rendering
+  - [x] show loading animation while rendering
 - [ ] doc
   - [x] doc dev process
   - [x] doc dependencies

@@ -27,6 +27,7 @@ async function render_timepoint(){
     document.getElementById("timepoint_render_button").disabled = true;
     document.getElementById("timerange_render_button").disabled = true;
     document.getElementById("save_button").disabled = true;
+    document.getElementById("display_loader").style.opacity = 1;
     
     let data_type = "temperature";
     if(document.getElementById("data_options_humidity").checked){
@@ -56,12 +57,14 @@ async function render_timepoint(){
     document.getElementById("timepoint_render_button").disabled = false;
     document.getElementById("timerange_render_button").disabled = false;
     document.getElementById("save_button").disabled = false;
+    document.getElementById("display_loader").style.opacity = 0;
 }
 
 async function render_timerange(){
     document.getElementById("timepoint_render_button").disabled = true;
     document.getElementById("timerange_render_button").disabled = true;
     document.getElementById("save_button").disabled = true;
+    document.getElementById("display_loader").style.opacity = 1;
 
     let data_type = "temperature";
     if(document.getElementById("data_options_humidity").checked){
@@ -94,6 +97,7 @@ async function render_timerange(){
     document.getElementById("timepoint_render_button").disabled = false;
     document.getElementById("timerange_render_button").disabled = false;
     document.getElementById("save_button").disabled = false;
+    document.getElementById("display_loader").style.opacity = 0;
 }
 
 async function save(){
